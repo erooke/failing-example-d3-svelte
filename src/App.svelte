@@ -26,9 +26,8 @@
 
     d3.select(svg)
       .selectAll("circle")
-      .data(entries)
-      .enter()
-      .append("svg:circle")
+      .data(entries, d => d)
+      .join("svg:circle")
       .attr("cx", (e) => xScale(e.x))
       .attr("cy", (e) => yScale(e.y))
       .attr("r", 5)
