@@ -7,13 +7,15 @@
   function addEntry() {
     const i = entries.length + 1
     entries = [ ...entries, {x: i, y: i * 10} ]
-    console.log(i)
   }
 
   // D3 Logic
   const width = 800;
   const height = 300;
-  $: {
+
+  let svg;
+
+  $: if (svg) {
     const xScale = scaleLinear()
       .domain(extent(entries, (e) => e.x))
       .range([0, width])
@@ -22,7 +24,7 @@
       .domain(extent(entries, (e) => e.y))
       .range([height,0])
 
-    d3.select("#chart")
+    d3.select(svg)
       .selectAll("circle")
       .data(entries)
       .enter()
@@ -37,7 +39,7 @@
   <h1>D3 Example</h1>
   <button on:click={addEntry}> Add Entry </button>
   <div>
-  <svg id="chart" {width} {height}>
+  <svg bind:this={svg} {width} {height}>
   </svg>
   </div>
 </main>
